@@ -11,11 +11,11 @@ extern "C" {
     extern void gdt_flush(uint32_t);
 }
 
-
+void init_gdt() asm ("init_gdt");
 
 
 // Set the value of one GDT entry.
-static void gdt_set_gate(s32int num, u32int base, u32int limit, u8int access, u8int gran)
+static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
    gdt_entries[num].base_low    = (base & 0xFFFF);
    gdt_entries[num].base_middle = (base >> 16) & 0xFF;
@@ -31,8 +31,8 @@ static void gdt_set_gate(s32int num, u32int base, u32int limit, u8int access, u8
 
 void init_gdt()
 {
-    ptr.gdt.limit = sizeof(struct gdt_entry) * GDT_ENTRIES - 1;
-    ptr.gdt.base = (uint32_t)&gdt_entries;
+    ptr_gdt.limit = sizeof(struct gdt_entry) * GDT_ENTRIES - 1;
+    ptr_gdt.base = (uint32_t)&gdt_entries;
 
     gdt_set_gate(0, 0, 0, 0, 0);                // Null segment
     gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
@@ -41,5 +41,6 @@ void init_gdt()
     gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
    
-    gdt_flush((uint32_t)&gdt_ptr);
+     
+    gdt_flush((uint32_t)&ptr_gdt);
 }
