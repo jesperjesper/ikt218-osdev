@@ -23,7 +23,7 @@ struct gdt_entry
    uint8_t  base_high;           // The last 8 bits of the base.
 } __attribute__((packed));
 
-
+//Another struct; this one contains the size and base address of the gdt.
 struct gdt_ptr
 {
    uint16_t limit;               // The upper 16 bits of all selector limits.
@@ -33,7 +33,7 @@ struct gdt_ptr
 //function
 void init_gdt(); 
 
-
+//sets the value of a single gate
 void set_gdt_entry(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity);
 
 
