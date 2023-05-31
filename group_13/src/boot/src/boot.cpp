@@ -1,10 +1,9 @@
 #include "boot.h"
 #include <system.h>
+#include "gdt.h"
 
 extern "C" {
     void initialize_multiboot(uint32_t magic, multiboot_info info);
-    //#include "strings.h"
-    //#include "../../kernel/src/drivers/screen.h"
 }
 
 void initialize_multiboot(uint32_t magic, multiboot_info info)

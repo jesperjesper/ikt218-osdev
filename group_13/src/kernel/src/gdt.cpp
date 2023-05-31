@@ -10,6 +10,9 @@ struct gdt_ptr ptr_gdt;
 extern "C" {
     extern void gdt_flush(uint32_t);
 }
+extern "C" {
+  extern void reload_segments();
+}
 
 void init_gdt() asm ("init_gdt");
 
@@ -28,12 +31,14 @@ static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t acc
    gdt_entries[num].access      = access;
 } 
 
-
+//This setups up the gdt and creates entries for the null, code, dataand user mode code/data segments
 void init_gdt()
 {
     ptr_gdt.limit = sizeof(struct gdt_entry) * GDT_ENTRIES - 1;
     ptr_gdt.base = (uint32_t)&gdt_entries;
 
+
+    //this sets the value of each segment 
     gdt_set_gate(0, 0, 0, 0, 0);                // Null segment
     gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
     gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
@@ -41,6 +46,7 @@ void init_gdt()
     gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
    
-     
+    //uses the function we made in gdt.asm and loads the gdt into memory
     gdt_flush((uint32_t)&ptr_gdt);
+    reload_segments();
 }
