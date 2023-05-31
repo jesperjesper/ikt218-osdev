@@ -36,5 +36,7 @@ void init_gdt();
 //sets the value of a single gate
 void set_gdt_entry(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity);
 
+//loads the ldt into memory
+void gdt_loadt();
 
 #endif // GDT_H

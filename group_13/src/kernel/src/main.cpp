@@ -7,7 +7,6 @@ extern "C"{
     void kernel_main();
 }
 
-extern void init_gdt();
 
 
 //This is a fucntion for clearing the terminal screen
@@ -56,6 +55,8 @@ void terminal_write(const char* str)
 
 void kernel_main()
 {
+    void init_gdt(); 
+  
     terminal_write("Hello World!");
 
     while (1)
