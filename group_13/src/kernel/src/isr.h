@@ -87,3 +87,6 @@ typedef struct int_handler_t
 typedef void (*isr_t)(registers_t);
 
 void register_interrupt_handler(uint8_t n, isr_t handler);
+
+
+#endif
