@@ -1,6 +1,7 @@
 
 #include "system.h"
 #include "gdt.h"
+#include "idt.h"
 
 // Define entry point in asm to prevent C++ mangling
 extern "C"{
@@ -56,6 +57,7 @@ void terminal_write(const char* str)
 void kernel_main()
 {
     void init_gdt(); 
+    void init_idt();
   
     terminal_write("Hello World!");
 

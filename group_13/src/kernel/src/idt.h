@@ -8,6 +8,7 @@
 //256 because idt
 #define IDT_ENTRIES 256
 
+
 // //This defines the structure of the struct
 //had to change to uiaint16_t
 struct idt_entry_t {
